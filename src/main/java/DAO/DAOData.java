@@ -20,7 +20,6 @@ public class DAOData implements IDAOData {
     private final String checkQuery = "SELECT COUNT(*) FROM tb_mahasiswa WHERE nim = ?";
     private final String insert = "INSERT INTO tb_mahasiswa (nim, nama, jenis_kelamin, kelas, prodi, fakultas, angkatan) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final String read = "SELECT * FROM tb_mahasiswa";
-    private final String update = "UPDATE tb_mahasiswa SET nama=?, jenis_kelamin=?, kelas=?, prodi=?, fakultas=?, angkatan=? WHERE nim=?";
     private final String delete = "DELETE FROM tb_mahasiswa WHERE nim=?";
 
     public DAOData() {
@@ -74,19 +73,26 @@ public class DAOData implements IDAOData {
             statement.execute();
             System.out.println("Data berhasil diinput!");
         } catch (SQLException e) {
-            System.out.println("Gagal Input Data! " + e.getMessage());
+            System.out.println("Gagal Input Data!");
+            System.out.println(e.getMessage()); // Print the SQL error message
         } finally {
             try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
             } catch (SQLException ex) {
-                System.out.println("Error closing statement or result set: " + ex.getMessage());
+                System.out.println("Gagal menutup statement!");
             }
         }
     }
 
     @Override
     public void update(TambahData b) {
+        String update = "UPDATE tb_mahasiswa SET nama=?, jenis_kelamin=?, kelas=?, prodi=?, fakultas=?, angkatan=? WHERE nim=?";
+        
         try (PreparedStatement checkStmt = con.prepareStatement(checkQuery)) {
             checkStmt.setString(1, b.getNim());
             ResultSet rs = checkStmt.executeQuery();
@@ -136,6 +142,9 @@ public class DAOData implements IDAOData {
                 mhs.setNama(res.getString("nama"));
                 mhs.setJenisKelamin(res.getString("jenis_kelamin"));
                 mhs.setKelas(res.getString("kelas"));
+                mhs.setProdi(res.getString("prodi"));
+                mhs.setFakultas(res.getString("fakultas"));
+                mhs.setAngkatan(res.getString("angkatan"));
                 lstMhs.add(mhs);
             }
         } catch (SQLException e) {
@@ -150,7 +159,7 @@ public class DAOData implements IDAOData {
         try (PreparedStatement statement = con.prepareStatement(sql)) {
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Gagal menghapus semua data: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
