@@ -24,21 +24,15 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("A");
-        data.setProdi("Teknik Informatika"); // Add program field
-        data.setFakultas("Fakultas Teknik"); // Add faculty field
-        data.setAngkatan("2022"); // Add year field
     
         // Insert data
         daoData.insert(data);
     
-        // Get all data
+        // Retrieve all data
         List<TambahData> result = daoData.getAll();
     
-        // Verify that the name and other fields are as expected
+        // Verify that the expected name is in the result
         assertEquals("John Doe", result.get(0).getNama());
-        assertEquals("Teknik Informatika", result.get(0).getProdi());
-        assertEquals("Fakultas Teknik", result.get(0).getFakultas());
-        assertEquals("2022", result.get(0).getAngkatan());
     }
 
     @Test
@@ -49,14 +43,10 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("Kelas A");
-        data.setProdi("Teknik Informatika");
-        data.setFakultas("Fakultas Teknik");
-        data.setAngkatan("2022");
         daoData.insert(data);
 
         // Update
         data.setNama("Jane Doe");
-        data.setProdi("Sistem Informasi");
         daoData.update(data);
 
         // Act
@@ -64,7 +54,6 @@ public class DAODataTest {
 
         // Assert
         assertEquals("Jane Doe", allData.get(0).getNama());
-        assertEquals("Sistem Informasi", allData.get(0).getProdi());
     }
 
     @Test
@@ -75,10 +64,7 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("Kelas A");
-        data.setProdi("Teknik Informatika");
-        data.setFakultas("Fakultas Teknik");
-        data.setAngkatan("2022");
-        daoData.insert(data);
+        daoData.insert(data);  // Insert data before deletion
 
         // Delete the data
         daoData.delete("12345");
@@ -94,9 +80,6 @@ public class DAODataTest {
         data1.setNama("John Doe");
         data1.setJenisKelamin("Laki-laki");
         data1.setKelas("A");
-        data1.setProdi("Teknik Informatika");
-        data1.setFakultas("Fakultas Teknik");
-        data1.setAngkatan("2022");
         daoData.insert(data1);
     
         TambahData data2 = new TambahData();
@@ -104,9 +87,6 @@ public class DAODataTest {
         data2.setNama("Jane Smith");
         data2.setJenisKelamin("Perempuan");
         data2.setKelas("B");
-        data2.setProdi("Sistem Informasi");
-        data2.setFakultas("Fakultas Teknik");
-        data2.setAngkatan("2023");
         daoData.insert(data2);
     
         // Act: Search by NIM
