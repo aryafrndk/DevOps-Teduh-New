@@ -27,9 +27,9 @@ public class DBConnection {
                 "nim VARCHAR(20) PRIMARY KEY, " +
                 "nama VARCHAR(100), " +
                 "jenis_kelamin VARCHAR(10), " +
-                "kelas VARCHAR(20)" +
-                "prodi VARCHAR(100)" +
-                "fakultas VARCHAR(100)" +
+                "kelas VARCHAR(20)," +
+                "prodi VARCHAR(100)," +
+                "fakultas VARCHAR(100)," +
                 "angkatan VARCHAR(100)" +
                 ");";
         try (Statement stmt = con.createStatement()) {
