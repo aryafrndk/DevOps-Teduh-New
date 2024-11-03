@@ -4,7 +4,6 @@ import DAOInterface.IDAOData;
 import model.TambahData;
 import koneksi.DBConnection;
 
-import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,7 +60,7 @@ public class DAOData implements IDAOData {
             statement.setString(1, b.getNim());
             resultSet = statement.executeQuery();
             if (resultSet.next() && resultSet.getInt(1) > 0) {
-                JOptionPane.showMessageDialog(null, "Data sudah ada di dalam database!");
+                System.out.println("Data sudah ada di dalam database!");
                 return;
             }
             statement = con.prepareStatement(insert);
@@ -73,7 +72,7 @@ public class DAOData implements IDAOData {
             statement.setString(6, b.getFakultas());
             statement.setString(7, b.getAngkatan());
             statement.execute();
-            JOptionPane.showMessageDialog(null, "Data berhasil diinput!");
+            System.out.println("Data berhasil diinput!");
         } catch (SQLException e) {
             System.out.println("Gagal Input Data! " + e.getMessage());
         } finally {
