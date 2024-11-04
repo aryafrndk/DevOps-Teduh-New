@@ -4,16 +4,25 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import DAO.DAOData;  // Import the DAOData class
+import view.newfiture;  // Import the newfiture class
 import model.TambahData;
 import java.util.List;
 
 public class DAODataTest {
     
     private DAOData daoData;
+    private JPanel mainPanel;
+    private JButton btRegis1;
 
     @BeforeEach
     public void setUp() {
         daoData = new DAOData();
+        mainPanel = new JPanel();
+        btRegis1 = new JButton();
+
+        // Set up action listener untuk btRegis1 yang memanggil btRegis1ActionPerformed
+        btRegis1.addActionListener(evt -> btRegis1ActionPerformed(evt));
+        
         daoData.deleteAll();
     }
 
@@ -128,5 +137,16 @@ public class DAODataTest {
         
         // Assert: Verify the search results are empty
         assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
+    }
+
+    void testButtonActionAddsNewFitureToMainPanel() {
+        // Klik tombol untuk memicu action
+        btRegis1.doClick();
+
+        // Pastikan hanya ada satu komponen di mainPanel setelah penambahan
+        assertEquals(1, mainPanel.getComponentCount(), "Komponen tidak berhasil ditambahkan.");
+
+        // Periksa apakah komponen yang ditambahkan adalah instance dari newfiture
+        assertTrue(mainPanel.getComponent(0) instanceof newfiture, "Komponen yang ditambahkan bukan instance dari newfiture.");
     }
 }
