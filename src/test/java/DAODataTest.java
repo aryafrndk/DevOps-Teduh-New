@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import DAO.DAOData;  // Import the DAOData class
-import view.newfiture;  // Import the newfiture class
+import tampilan.DASHBOARD ;  // Import DASHBOARD
 import model.TambahData;
 import java.util.List;
 import javax.swing.JButton;
