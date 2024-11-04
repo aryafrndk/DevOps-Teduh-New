@@ -26,6 +26,16 @@ jobs:
           --health-interval=30s
           --health-timeout=5s
           --health-retries=3
+
+      sonarqube:
+        image: sonarqube:latest
+        ports:
+          - 9000:9000
+        options: >-
+          --health-cmd="curl -f http://localhost:9000/api/system/health || exit 1"
+          --health-interval=30s
+          --health-timeout=5s
+          --health-retries=3
           
     steps:
     - uses: actions/checkout@v4
@@ -37,6 +47,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Start SonarQube
+      run: |
+        echo "Waiting for SonarQube to be ready..."
+        sleep 60  # Tunggu SonarQube siap. Anda mungkin perlu menyesuaikan durasi ini.
+    
     - name: Build and test with Maven
       run: mvn clean install --file pom.xml
 
@@ -45,5 +60,3 @@ jobs:
 
     - name: SonarQube Scan
       run: mvn clean verify sonar:sonar -D"sonar.projectKey=UTSDevOps" -D"sonar.projectName=UTSDevOps" -D"sonar.host.url=http://localhost:9000/" -D"sonar.token=sqp_d60ed52b99e0f940fb8860e9089dcfbdb42a53c3"
-
-
