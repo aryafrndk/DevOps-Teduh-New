@@ -57,6 +57,11 @@ public class newfiture extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+
+    // Getter for dataDihapus
+    public int getDataDihapus() {
+        return dataDihapus;
+    }
     
     private void updateDataCount() {
         try {
