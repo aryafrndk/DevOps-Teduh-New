@@ -129,4 +129,20 @@ public class DAODataTest {
         // Assert: Verify the search results are empty
         assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
     }
+
+    @Test
+    public void testLoadDataDihapus() {
+        String filePath = "datahapus.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("5"); 
+        } catch (Exception e) {
+            fail("Failed to create test file: " + e.getMessage());
+        }
+
+        newfiture feature = new newfiture();
+        feature.loadDataDihapus();
+
+
+        assertEquals(5, feature.getDataDihapus(), "dataDihapus should be loaded as 5 from the file");
+    }
 }
