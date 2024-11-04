@@ -1,20 +1,37 @@
-package test;
+import view.newfiture;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import DAO.DAOData;  // Import the DAOData class
+import DAO.DAOData;
 import model.TambahData;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 public class DAODataTest {
-    
+
     private DAOData daoData;
+    private Connection mockConnection;
+    private Statement mockStatement;
+    private ResultSet mockResultSet;
+    private YourClass yourClass; // Replace 'YourClass' with the actual class name if different
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         daoData = new DAOData();
         daoData.deleteAll();
+
+        // Setup mocks
+        mockConnection = mock(Connection.class);
+        mockStatement = mock(Statement.class);
+        mockResultSet = mock(ResultSet.class);
+
+        // Initialize 'YourClass' instance
+        yourClass = new YourClass();
+        yourClass.setConnection(mockConnection); // Assume there's a method to set the mock connection
     }
 
     @Test
@@ -24,17 +41,14 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("A");
-        data.setProdi("Teknik Informatika"); // Add program field
-        data.setFakultas("Fakultas Teknik"); // Add faculty field
-        data.setAngkatan("2022"); // Add year field
-    
-        // Insert data
+        data.setProdi("Teknik Informatika");
+        data.setFakultas("Fakultas Teknik");
+        data.setAngkatan("2022");
+
         daoData.insert(data);
-    
-        // Get all data
+
         List<TambahData> result = daoData.getAll();
-    
-        // Verify that the name and other fields are as expected
+
         assertEquals("John Doe", result.get(0).getNama());
         assertEquals("Teknik Informatika", result.get(0).getProdi());
         assertEquals("Fakultas Teknik", result.get(0).getFakultas());
@@ -43,7 +57,6 @@ public class DAODataTest {
 
     @Test
     public void testUpdate() {
-        // Arrange
         TambahData data = new TambahData();
         data.setNim("12345");
         data.setNama("John Doe");
@@ -54,22 +67,18 @@ public class DAODataTest {
         data.setAngkatan("2022");
         daoData.insert(data);
 
-        // Update
         data.setNama("Jane Doe");
         data.setProdi("Sistem Informasi");
         daoData.update(data);
 
-        // Act
         List<TambahData> allData = daoData.getAll();
 
-        // Assert
         assertEquals("Jane Doe", allData.get(0).getNama());
         assertEquals("Sistem Informasi", allData.get(0).getProdi());
     }
 
     @Test
     public void testDelete() {
-        // Ensure there's data to delete
         TambahData data = new TambahData();
         data.setNim("12345");
         data.setNama("John Doe");
@@ -80,7 +89,6 @@ public class DAODataTest {
         data.setAngkatan("2022");
         daoData.insert(data);
 
-        // Delete the data
         daoData.delete("12345");
         List<TambahData> allData = daoData.getAll();
         assertFalse(allData.stream().anyMatch(mhs -> mhs.getNim().equals("12345")), "Data should be deleted");
@@ -88,7 +96,6 @@ public class DAODataTest {
 
     @Test
     public void testSearch() {
-        // Arrange
         TambahData data1 = new TambahData();
         data1.setNim("123456");
         data1.setNama("John Doe");
@@ -98,7 +105,7 @@ public class DAODataTest {
         data1.setFakultas("Fakultas Teknik");
         data1.setAngkatan("2022");
         daoData.insert(data1);
-    
+
         TambahData data2 = new TambahData();
         data2.setNim("654321");
         data2.setNama("Jane Smith");
@@ -108,25 +115,46 @@ public class DAODataTest {
         data2.setFakultas("Fakultas Teknik");
         data2.setAngkatan("2023");
         daoData.insert(data2);
-    
-        // Act: Search by NIM
+
         List<TambahData> resultsByNIM = daoData.search("123456");
-        
-        // Assert: Verify the search results contain John Doe
+
         assertEquals(1, resultsByNIM.size());
         assertEquals("John Doe", resultsByNIM.get(0).getNama());
-    
-        // Act: Search by name
+
         List<TambahData> resultsByName = daoData.search("Jane");
-        
-        // Assert: Verify the search results contain Jane Smith
+
         assertEquals(1, resultsByName.size());
         assertEquals("Jane Smith", resultsByName.get(0).getNama());
-    
-        // Act: Search with a keyword that doesn't match any data
+
         List<TambahData> resultsEmpty = daoData.search("Unknown");
-        
-        // Assert: Verify the search results are empty
+
         assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
+    }
+
+    @Test
+    void testUpdateDataCount() throws Exception {
+        // Mocking database interaction
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
+
+        // Simulate ResultSet for data count
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getInt("total")).thenReturn(8); // Assume the new data count is 8
+
+        // Call the method under test
+        yourClass.updateDataCount();
+
+        // Verify data counts are updated correctly
+        assertEquals(8, yourClass.totalData);
+        assertEquals(2, yourClass.dataDihapus);
+
+        // Verify interactions with mocks
+        verify(mockConnection).createStatement();
+        verify(mockStatement).executeQuery(anyString());
+        verify(mockResultSet).getInt("total");
+
+        // Optional: Assert GUI component updates if required
+        assertEquals("8", yourClass.datautuh.getText()); // Assume datautuh is a JLabel
+        assertEquals("2", yourClass.datahapus.getText());
     }
 }
