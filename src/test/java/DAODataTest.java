@@ -18,7 +18,9 @@ public class DAODataTest {
     private Connection mockConnection;
     private Statement mockStatement;
     private ResultSet mockResultSet;
-    private YourClass yourClass; // Replace 'YourClass' with the actual class name if different
+
+    // Ganti `YourClass` dengan class yang benar
+    private DAOData yourClass; // Jika class yang dimaksud berbeda, ganti nama ini sesuai kebutuhan
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -30,9 +32,10 @@ public class DAODataTest {
         mockStatement = mock(Statement.class);
         mockResultSet = mock(ResultSet.class);
 
-        // Initialize 'YourClass' instance
-        yourClass = new YourClass();
-        yourClass.setConnection(mockConnection); // Assume there's a method to set the mock connection
+        // Initialize DAOData instance atau class yang tepat
+        yourClass = new DAOData(); // Sesuaikan jika nama class berbeda
+        // Jika ada metode `setConnection`, pastikan tersedia di DAOData
+        yourClass.setConnection(mockConnection); // Asumsi ada metode untuk menyetel koneksi mock
     }
 
     @Test
