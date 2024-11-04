@@ -46,4 +46,4 @@ jobs:
     - name: SonarQube Scan
       run: mvn clean verify sonar:sonar -D"sonar.projectKey=UTSDevOps" -D"sonar.projectName=UTSDevOps" -D"sonar.host.url=https://f60c-103-233-100-236.ngrok-free.app" -D"sonar.token=sqp_d60ed52b99e0f940fb8860e9089dcfbdb42a53c3"
 
-
+ 
