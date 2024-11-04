@@ -19,6 +19,9 @@ public class DAODataTest {
     private Statement mockStatement;
     private ResultSet mockResultSet;
 
+    // Ganti `YourClass` dengan class yang benar
+    private DAOData yourClass; // Jika class yang dimaksud berbeda, ganti nama ini sesuai kebutuhan
+
     @BeforeEach
     public void setUp() throws Exception {
         daoData = new DAOData();
@@ -28,6 +31,11 @@ public class DAODataTest {
         mockConnection = mock(Connection.class);
         mockStatement = mock(Statement.class);
         mockResultSet = mock(ResultSet.class);
+
+        // Initialize DAOData instance atau class yang tepat
+        yourClass = new DAOData(); // Sesuaikan jika nama class berbeda
+        // Jika ada metode `setConnection`, pastikan tersedia di DAOData
+        yourClass.setConnection(mockConnection); // Asumsi ada metode untuk menyetel koneksi mock
     }
 
     @Test
@@ -125,5 +133,32 @@ public class DAODataTest {
         List<TambahData> resultsEmpty = daoData.search("Unknown");
 
         assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
+    }
+
+    @Test
+    void testUpdateDataCount() throws Exception {
+        // Mocking database interaction
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
+
+        // Simulate ResultSet for data count
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getInt("total")).thenReturn(8); // Assume the new data count is 8
+
+        // Call the method under test
+        yourClass.updateDataCount();
+
+        // Verify data counts are updated correctly
+        assertEquals(8, yourClass.totalData);
+        assertEquals(2, yourClass.dataDihapus);
+
+        // Verify interactions with mocks
+        verify(mockConnection).createStatement();
+        verify(mockStatement).executeQuery(anyString());
+        verify(mockResultSet).getInt("total");
+
+        // Optional: Assert GUI component updates if required
+        assertEquals("8", yourClass.datautuh.getText()); // Assume datautuh is a JLabel
+        assertEquals("2", yourClass.datahapus.getText());
     }
 }
