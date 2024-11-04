@@ -27,11 +27,24 @@ jobs:
           --health-timeout=5s
           --health-retries=3
 
+      sonarqube:
+        image: sonarqube:latest
+        ports:
+          - 9000:9000
+        options: >-
+          --health-cmd="curl -s http://localhost:9000/api/system/health"
+          --health-interval=30s
+          --health-timeout=5s
+          --health-retries=10
+        env:
+          SONARQUBE_JDBC_URL: jdbc:mysql://mysql:3306/db_mahasiswa
+          SONARQUBE_JDBC_USERNAME: root
+          SONARQUBE_JDBC_PASSWORD: ""
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        # Disabling shallow clone is recommended for improving relevancy of reporting
         fetch-depth: 0
 
     - name: Set up JDK 11
@@ -41,14 +54,15 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build and test with Maven
-      run: mvn clean install --file pom.xml
-
-    - name: Build package
-      run: mvn package
+    - name: Wait for SonarQube
+      run: |
+        until $(curl --output /dev/null --silent --head --fail http://localhost:9000); do
+          echo "Waiting for SonarQube..."
+          sleep 5
+        done
 
     - name: SonarQube Scan
       uses: kitabisa/sonarqube-action@v1.2.0
       with:
-        host: ${{ secrets.SONARQUBE_HOST }}
+        host: "http://localhost:9000"
         login: ${{ secrets.SONARQUBE_TOKEN }}
