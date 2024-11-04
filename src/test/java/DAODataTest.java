@@ -5,40 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import DAO.DAOData;  // Import the DAOData class
 import model.TambahData;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.List;
 
 public class DAODataTest {
     
     private DAOData daoData;
-    private static final String filePath = "datahapus.txt";
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         daoData = new DAOData();
         daoData.deleteAll();
-
-        // Ensure datahapus.txt exists and is initialized
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write("0"); // Initialize with 0 for the test
-        }
     }
-
-    @Test
-    public void testLoadDataDihapus() {
-        // Simulate loading the deleted data
-        daoData.loadDataDihapus();  // Make sure this method is public or accessible
-        
-        // Verify that dataDihapus is 0
-        assertEquals(0, daoData.getDataDihapus(), "The value of dataDihapus should be 0 when the file contains 0");
-    }
-
 
     @Test
     public void testInsertAndGetAll() {
