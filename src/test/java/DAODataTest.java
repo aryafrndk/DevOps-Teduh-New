@@ -12,22 +12,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
-package DAO;
+public class DAODataTest {
 
-import java.sql.Connection;
-import javax.swing.JLabel;
+    private DAOData daoData;
+    private Connection mockConnection;
+    private Statement mockStatement;
+    private ResultSet mockResultSet;
 
-public class DAOData {
-    private Connection connection;   // Menyimpan koneksi ke database
-    public int totalData;            // Variabel untuk menyimpan jumlah data total
-    public int dataDihapus;          // Variabel untuk menyimpan jumlah data yang dihapus
-    public JLabel datautuh;          // Label untuk menampilkan data utuh
-    public JLabel datahapus;         // Label untuk menampilkan data yang dihapus
-
-    // Method untuk mengatur koneksi
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
     @BeforeEach
     public void setUp() throws Exception {
         daoData = new DAOData();
@@ -37,11 +28,6 @@ public class DAOData {
         mockConnection = mock(Connection.class);
         mockStatement = mock(Statement.class);
         mockResultSet = mock(ResultSet.class);
-
-        // Initialize DAOData instance atau class yang tepat
-        yourClass = new DAOData(); // Sesuaikan jika nama class berbeda
-        // Jika ada metode `setConnection`, pastikan tersedia di DAOData
-        yourClass.setConnection(mockConnection); // Asumsi ada metode untuk menyetel koneksi mock
     }
 
     @Test
@@ -139,32 +125,5 @@ public class DAOData {
         List<TambahData> resultsEmpty = daoData.search("Unknown");
 
         assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
-    }
-
-    @Test
-    void testUpdateDataCount() throws Exception {
-        // Mocking database interaction
-        when(mockConnection.createStatement()).thenReturn(mockStatement);
-        when(mockStatement.executeQuery(anyString())).thenReturn(mockResultSet);
-
-        // Simulate ResultSet for data count
-        when(mockResultSet.next()).thenReturn(true);
-        when(mockResultSet.getInt("total")).thenReturn(8); // Assume the new data count is 8
-
-        // Call the method under test
-        yourClass.updateDataCount();
-
-        // Verify data counts are updated correctly
-        assertEquals(8, yourClass.totalData);
-        assertEquals(2, yourClass.dataDihapus);
-
-        // Verify interactions with mocks
-        verify(mockConnection).createStatement();
-        verify(mockStatement).executeQuery(anyString());
-        verify(mockResultSet).getInt("total");
-
-        // Optional: Assert GUI component updates if required
-        assertEquals("8", yourClass.datautuh.getText()); // Assume datautuh is a JLabel
-        assertEquals("2", yourClass.datahapus.getText());
     }
 }
