@@ -20,11 +20,11 @@
     <dependencies>
         <!-- JUnit 5 for unit testing -->
         <dependency>
-                 <groupId>org.junit.jupiter</groupId>
-                 <artifactId>junit-jupiter-engine</artifactId>
-                 <version>5.7.0</version>
-                 <scope>test</scope>
-         </dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.2</version> <!-- or latest version -->
+            <scope>test</scope>
+        </dependency>
 
         <!-- MySQL Connector/J for database connections -->
         <dependency>
@@ -33,13 +33,6 @@
             <version>8.0.29</version> <!-- or latest version -->
         </dependency>
 
-        <dependency>
-             <groupId>org.mockito</groupId>
-             <artifactId>mockito-core</artifactId>
-             <version>4.0.0</version>
-             <scope>test</scope>
-         </dependency>
-     
         <!-- Add more dependencies as needed -->
     </dependencies>
 
