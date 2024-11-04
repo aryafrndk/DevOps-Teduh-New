@@ -7,7 +7,8 @@ import DAO.DAOData;  // Import the DAOData class
 import view.newfiture;  // Import the newfiture class
 import model.TambahData;
 import java.util.List;
-import javax.swing;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class DAODataTest {
     
