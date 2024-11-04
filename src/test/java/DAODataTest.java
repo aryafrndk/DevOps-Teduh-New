@@ -140,13 +140,14 @@ public class DAODataTest {
         assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
     }
 
+    @Test
     void testButtonActionAddsNewFitureToMainPanel() {
         // Klik tombol untuk memicu action
         btRegis1.doClick();
-
+    
         // Pastikan hanya ada satu komponen di mainPanel setelah penambahan
         assertEquals(1, mainPanel.getComponentCount(), "Komponen tidak berhasil ditambahkan.");
-
+    
         // Periksa apakah komponen yang ditambahkan adalah instance dari newfiture
         assertTrue(mainPanel.getComponent(0) instanceof newfiture, "Komponen yang ditambahkan bukan instance dari newfiture.");
     }
