@@ -43,6 +43,6 @@ public class ReadDelTest {
         feature.loadDataDihapus();
 
         // Assert: Check if the dataDihapus is loaded correctly
-        assertEquals(5, feature.dataDihapus);
+        assertEquals(5, feature.getDataDihapus()); // use the getter method
     }
 }
