@@ -25,7 +25,7 @@ public class newfiture extends javax.swing.JPanel {
     private static final String filePath = "datahapus.txt";
     private static int lastTotalData = -1;
     private int totalData = 0;
-    private int dataDihapus = 0;
+    int dataDihapus = 0;
     /**
      * Creates new form newfiture
      */
@@ -35,7 +35,7 @@ public class newfiture extends javax.swing.JPanel {
         updateDataCount();
     }
     
-    private void loadDataDihapus() {
+    void loadDataDihapus() {
         File file = new File(filePath);
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -56,6 +56,11 @@ public class newfiture extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // Getter for dataDihapus
+    public int getDataDihapus() {
+        return dataDihapus;
     }
     
     private void updateDataCount() {
