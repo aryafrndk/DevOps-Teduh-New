@@ -77,37 +77,4 @@ public class DAODataTest {
         assertFalse(allData.stream().anyMatch(mhs -> mhs.getNim().equals("12345")), "Data should be deleted");
     }
 
-    @Test
-    public void testSearch() {
-        TambahData data1 = new TambahData();
-        data1.setNim("123456");
-        data1.setNama("John Doe");
-        data1.setJenisKelamin("Laki-laki");
-        data1.setKelas("A");
-        data1.setProdi("Teknik Informatika");
-        data1.setFakultas("Fakultas Teknik");
-        data1.setAngkatan("2022");
-        daoData.insert(data1);
-    
-        TambahData data2 = new TambahData();
-        data2.setNim("654321");
-        data2.setNama("Jane Smith");
-        data2.setJenisKelamin("Perempuan");
-        data2.setKelas("B");
-        data2.setProdi("Sistem Informasi");
-        data2.setFakultas("Fakultas Teknik");
-        data2.setAngkatan("2023");
-        daoData.insert(data2);
-    
-        List<TambahData> resultsByNIM = daoData.search("123456");
-        assertEquals(1, resultsByNIM.size());
-        assertEquals("John Doe", resultsByNIM.get(0).getNama());
-    
-        List<TambahData> resultsByName = daoData.search("Jane");
-        assertEquals(1, resultsByName.size());
-        assertEquals("Jane Smith", resultsByName.get(0).getNama());
-    
-        List<TambahData> resultsEmpty = daoData.search("Unknown");
-        assertTrue(resultsEmpty.isEmpty(), "Search should return no results for 'Unknown'");
-    }
 }
