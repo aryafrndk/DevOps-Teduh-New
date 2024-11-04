@@ -12,16 +12,22 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
-public class DAODataTest {
+package DAO;
 
-    private DAOData daoData;
-    private Connection mockConnection;
-    private Statement mockStatement;
-    private ResultSet mockResultSet;
+import java.sql.Connection;
+import javax.swing.JLabel;
 
-    // Ganti `YourClass` dengan class yang benar
-    private DAOData yourClass; // Jika class yang dimaksud berbeda, ganti nama ini sesuai kebutuhan
+public class DAOData {
+    private Connection connection;   // Menyimpan koneksi ke database
+    public int totalData;            // Variabel untuk menyimpan jumlah data total
+    public int dataDihapus;          // Variabel untuk menyimpan jumlah data yang dihapus
+    public JLabel datautuh;          // Label untuk menampilkan data utuh
+    public JLabel datahapus;         // Label untuk menampilkan data yang dihapus
 
+    // Method untuk mengatur koneksi
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
     @BeforeEach
     public void setUp() throws Exception {
         daoData = new DAOData();
