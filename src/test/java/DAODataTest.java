@@ -24,7 +24,7 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("A");
-        data.setProdi("Teknik Informatika"); // Add program field
+        data.setProdi(1234); // Add program field
         data.setFakultas("Fakultas Teknik"); // Add faculty field
         data.setAngkatan("2022"); // Add year field
     
@@ -36,7 +36,7 @@ public class DAODataTest {
     
         // Verify that the name and other fields are as expected
         assertEquals("John Doe", result.get(0).getNama());
-        assertEquals("Teknik Informatika", result.get(0).getProdi());
+        assertEquals(12345, result.get(0).getProdi());
         assertEquals("Fakultas Teknik", result.get(0).getFakultas());
         assertEquals("2022", result.get(0).getAngkatan());
     }
@@ -49,14 +49,14 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("Kelas A");
-        data.setProdi("Teknik Informatika");
+        data.setProdi(12345);
         data.setFakultas("Fakultas Teknik");
         data.setAngkatan("2022");
         daoData.insert(data);
 
         // Update
         data.setNama("Jane Doe");
-        data.setProdi("Sistem Informasi");
+        data.setProdi(12345);
         daoData.update(data);
 
         // Act
@@ -64,7 +64,7 @@ public class DAODataTest {
 
         // Assert
         assertEquals("Jane Doe", allData.get(0).getNama());
-        assertEquals("Sistem Informasi", allData.get(0).getProdi());
+        assertEquals(12345, allData.get(0).getProdi());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class DAODataTest {
         data.setNama("John Doe");
         data.setJenisKelamin("Laki-laki");
         data.setKelas("Kelas A");
-        data.setProdi("Teknik Informatika");
+        data.setProdi(12345);
         data.setFakultas("Fakultas Teknik");
         data.setAngkatan("2022");
         daoData.insert(data);
