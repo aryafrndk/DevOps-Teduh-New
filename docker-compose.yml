@@ -1,0 +1,19 @@
+services:
+  app:
+    image: fadhilf/tubesdev:tagname
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=
+      - DB_NAME=db_mahasiswa
+
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=db_mahasiswa
+    ports:
+      - "3306:3306"
+

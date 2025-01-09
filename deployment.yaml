@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tubesdevv-deployment
+spec:
+  replicas: 1  # You can change this if you need more than 1 replica
+  selector:
+    matchLabels:
+      app: tubesdevv
+  template:
+    metadata:
+      labels:
+        app: tubesdevv
+    spec:
+      containers:
+      - name: tubesdevv
+        image: fadhilf/tubesdev:tagname  # Replace with your actual image name and tag
+        ports:
+        - containerPort: 8080  # Change this if your app uses a different port
+
